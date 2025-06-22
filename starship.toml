@@ -28,7 +28,6 @@ $character\
 """
 
 palette = 'brogrammer'
-# palette = 'tokyo_night'
 add_newline = true
 
 [palettes.brogrammer]
