@@ -61,11 +61,8 @@ if [[ $iatest -gt 0 ]]; then bind "set completion-ignore-case on"; fi
 if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
 
 # Set the default editor
-export EDITOR=nvim
-export VISUAL=nvim
-alias spico='sudo pico'
-alias snano='sudo nano'
-alias vim='nvim'
+export EDITOR=micro
+export VISUAL=micro
 
 # To have colors for ls and all grep commands such as grep, egrep and zgrep
 export CLICOLOR=1
@@ -137,10 +134,6 @@ alias cls='clear'
 alias apt-get='sudo apt-get'
 alias multitail='multitail --no-repeat -c'
 alias freshclam='sudo freshclam'
-alias vi='nvim'
-alias svi='sudo vi'
-alias vis='nvim "+set si"'
-alias yayf="yay -Slq | fzf --multi --preview 'yay -Sii {1}' --preview-window=down:75% | xargs -ro yay -S"
 
 # Change directory aliases
 alias home='cd ~'
@@ -227,20 +220,6 @@ alias logs="sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' 
 
 # SHA1
 alias sha1='openssl sha1'
-
-alias clickpaste='sleep 3; xdotool type "$(xclip -o -selection clipboard)"'
-
-# KITTY - alias to be able to use kitty features when connecting to remote servers(e.g use tmux on remote server)
-
-alias kssh="kitty +kitten ssh"
-
-# alias to cleanup unused docker containers, images, networks, and volumes
-
-alias docker-clean=' \
-  docker container prune -f ; \
-  docker image prune -f ; \
-  docker network prune -f ; \
-  docker volume prune -f '
 
 #######################################################
 # SPECIAL FUNCTIONS
@@ -617,9 +596,6 @@ function hb {
 #######################################################
 # Set the ultimate amazing command prompt
 #######################################################
-
-alias hug="systemctl --user restart hugo"
-alias lanm="systemctl --user restart lan-mouse"
 
 # Check if the shell is interactive
 if [[ $- == *i* ]]; then

@@ -1,129 +1,162 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
 format = """
-[](#3B4252)\
-$python\
-$username\
-[](bg:#434C5E fg:#3B4252)\
+[╭](fg:current_line)\
+$os\
+$status\
 $directory\
-[](fg:#434C5E bg:#4C566A)\
 $git_branch\
 $git_status\
-[](fg:#4C566A bg:#86BBD8)\
-$c\
-$elixir\
-$elm\
+$fill\
 $golang\
 $haskell\
-$java\
-$julia\
-$nodejs\
+$ruby\
 $nim\
+$nodejs\
+$bun\
+$deno\
+$python\
+$java\
+$zig\
 $rust\
-[](fg:#86BBD8 bg:#06969A)\
-$docker_context\
-[](fg:#06969A bg:#33658A)\
+$c\
+$cmd_duration\
 $time\
-[ ](fg:#33658A)\
+$username\
+$line_break\
+$character\
 """
-command_timeout = 5000
-# Disable the blank line at the start of the prompt
-# add_newline = false
 
-# You can also replace your username with a neat symbol like  to save some space
-[username]
-show_always = true
-style_user = "bg:#3B4252"
-style_root = "bg:#3B4252"
-format = '[$user ]($style)'
+palette = 'brogrammer'
+# palette = 'tokyo_night'
+add_newline = true
+
+[palettes.brogrammer]
+foreground = '#D6DBE5'
+background = '#131313'
+current_line = '#2E2E3E'
+primary = '#1F1F1F'
+box = '#2E2E3E'
+blue = '#2A84D2'
+cyan = '#1081D6'
+green = '#2DC55E'
+orange = '#F81118'
+pink = '#F81118'
+purple = '#4E5AB7'
+red = '#F38BA8'
+yellow = '#ECBA0F'
+status = "#F81118"
+
+
+[os]
+format = '(fg:current_line)[](fg:blue)[💻](fg:primary bg:blue)[](fg:blue)'
+disabled = false
+
+[status]
+format = "[─](fg:current_line)[](fg:status)[](fg:primary bg:status)[](fg:status bg:box)[ $status](fg:foreground bg:box)[](fg:box)"
+pipestatus = true
+pipestatus_separator = "-"
+pipestatus_segment_format = "$status"
+pipestatus_format = "[─](fg:current_line)[](fg:status)[](fg:primary bg:status)[](fg:status bg:box)[ $pipestatus](fg:foreground bg:box)[](fg:box)"
+disabled = false
 
 [directory]
-style = "bg:#434C5E"
-format = "[ $path ]($style)"
-truncation_length = 3
-truncation_symbol = "…/"
-
-# Here is how you can shorten some long paths by text replacement
-# similar to mapped_locations in Oh My Posh:
-[directory.substitutions]
-"Documents" = "󰈙 "
-"Downloads" = " "
-"Music" = " "
-"Pictures" = " "
-# Keep in mind that the order matters. For example:
-# "Important Documents" = "  "
-# will not be replaced, because "Documents" was already substituted before.
-# So either put "Important Documents" before "Documents" or use the substituted version:
-# "Important  " = "  "
-
-[c]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[docker_context]
-symbol = " "
-style = "bg:#06969A"
-format = '[ $symbol $context ]($style)$path'
-
-[elixir]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[elm]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
+format = '[─](fg:current_line)[](fg:pink)[󰷏](fg:primary bg:pink)[](fg:pink bg:box)[ $read_only$truncation_symbol$path](fg:foreground bg:box)[](fg:box)'
+home_symbol = " ~/"
+truncation_symbol = ' '
+truncation_length = 2
+read_only = '󱧵 '
+read_only_style = ''
 
 [git_branch]
-symbol = ""
-style = "bg:#4C566A"
-format = '[ $symbol $branch ]($style)'
+format = '[─](fg:current_line)[](fg:green)[$symbol](fg:primary bg:green)[](fg:green bg:box)[ $branch](fg:foreground bg:box)'
+symbol = ''
 
 [git_status]
-style = "bg:#4C566A"
-format = '[$all_status$ahead_behind ]($style)'
-
-[golang]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[haskell]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[java]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[julia]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[nodejs]
-symbol = ""
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
+format = '[$all_status](fg:green bg:box)[](fg:box)'
+conflicted = ' ='
+up_to_date = ''
+untracked = ' ?${count}'
+stashed = ' $'
+modified = ' !${count}'
+staged = ' +'
+renamed = ' »'
+deleted = ' ✘'
+ahead = ' ⇡${count}'
+diverged = ' ⇕⇡${ahead_count}⇣${behind_count}'
+behind = ' ⇣${count}'
 
 [nim]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
+format = '[─](fg:current_line)[](fg:yellow)[$symbol](fg:primary bg:yellow)[](fg:yellow bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
+symbol = '🜲 Nim'
 
-[python]
-style = "bg:#3B4252"
-format = '[(\($virtualenv\) )]($style)'
+[haskell]
+format = '[─](fg:current_line)[](fg:magenta)[$symbol](fg:primary bg:magenta)[](fg:magenta bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
+symbol = 'λ Haskell'
+
+[ruby]
+format = '[─](fg:current_line)[](fg:red)[$symbol](fg:primary bg:red)[](fg:red bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
+symbol = '💎♦️  Ruby'
+
+
+[nodejs]
+format = '[─](fg:current_line)[](fg:green)[$symbol](fg:primary bg:green)[](fg:green bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
+symbol = '󰎙 Node.js'
+
+[bun]
+format = '[─](fg:current_line)[](fg:green)[$symbol](fg:primary bg:green)[](fg:green bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
+symbol = ' Bun'
+
+[deno]
+format = '[─](fg:current_line)[](fg:purple)[$symbol](fg:primary bg:purple)[](fg:purple bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
+symbol = '🦕 Deno'
+
+[zig]
+format = '[─](fg:current_line)[](fg:blue)[$symbol](fg:primary bg:blue)[](fg:blue bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
+symbol = '⚡️ Zig'
 
 [rust]
-symbol = ""
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
+format = '[─](fg:current_line)[](fg:yellow)[$symbol](fg:primary bg:yellow)[](fg:yellow bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
+symbol = ' Rust'
+
+[python]
+format = '[─](fg:current_line)[](fg:green)[$symbol](fg:primary bg:green)[](fg:green bg:box)[ (${version} )(\($virtualenv\) )](fg:foreground bg:box)[](fg:box)'
+symbol = ' python'
+
+[java]
+format = '[─](fg:current_line)[](fg:red)[$symbol](fg:primary bg:red)[](fg:red bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
+symbol = ' Java'
+
+[golang]
+format = '[─](fg:current_line)[](fg:red)[$symbol](fg:primary bg:red)[](fg:red bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
+symbol = '󰑮 Go'
+
+[c]
+format = '[─](fg:current_line)[](fg:blue)[$symbol](fg:primary bg:blue)[](fg:blue bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
+symbol = ' C'
+
+[fill]
+symbol = '─'
+style = 'fg:current_line'
+
+[cmd_duration]
+min_time = 500
+format = '[─](fg:current_line)[](fg:orange)[](fg:primary bg:orange)[](fg:orange bg:box)[ $duration](fg:foreground bg:box)[](fg:box)'
 
 [time]
+format = '[─](fg:current_line)[](fg:purple)[󰦖](fg:primary bg:purple)[](fg:purple bg:box)[ $time](fg:foreground bg:box)[](fg:box)'
+time_format = '%H:%M'
 disabled = false
-time_format = "%R" # Hour:Minute Format
-style = "bg:#33658A"
-format = '[ $time ]($style)'
+
+[username]
+format = '[─](fg:current_line)[](fg:yellow)[](fg:primary bg:yellow)[](fg:yellow bg:box)[ $user](fg:foreground bg:box)[](fg:box) '
+show_always = true
+
+[character]
+format = """
+[╰─$symbol](fg:current_line) """
+success_symbol = '[](fg:bold white)'
+error_symbol = '[×](fg:bold red)'
+
+[profiles]
+transient = """$character"""
