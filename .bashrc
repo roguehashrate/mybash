@@ -41,14 +41,39 @@ shopt -s checkwinsize
 shopt -s histappend
 PROMPT_COMMAND='history -a'
 
+export PATH=$HOME/.local/share/flatpak/exports/bin:$PATH
+
+
 # set up XDG folders
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CACHE_HOME="$HOME/.cache"
 
-# Seeing as other scripts will use it might as well export it
-export LINUXTOOLBOXDIR="$HOME/linuxtoolbox"
+# Imports for programming languages
+
+# PYTHON SUPPORT
+export PATH="$HOME/.local/bin:$PATH"
+
+# GO SUPPORT
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:$HOME/go/bin
+export PATH="$PATH:$(go env GOPATH)/bin"
+
+# NIM SUPPORT
+export PATH=/home/libertyimp/.nimble/bin:$PATH
+export PKG_CONFIG_PATH=/usr/bin/pkg-config
+
+# FLUTTER SUPPORT
+export PATH=~/code/flutter/bin:$PATH
+
+# JAVA SUPPORT
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+export PATH=$JAVA_HOME/bin:$PATH
+
+# ODIN SUPPORT
+export PATH="$HOME/Odin:$PATH"
+
 
 # Allow ctrl-S for history navigation (with ctrl-R)
 [[ $- == *i* ]] && stty -ixon
@@ -61,8 +86,8 @@ if [[ $iatest -gt 0 ]]; then bind "set completion-ignore-case on"; fi
 if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
 
 # Set the default editor
-export EDITOR=micro
-export VISUAL=micro
+export EDITOR=vim
+export VISUAL=vim
 
 # To have colors for ls and all grep commands such as grep, egrep and zgrep
 export CLICOLOR=1
@@ -127,13 +152,8 @@ alias cp='cp -i'
 alias mv='mv -i'
 alias rm='trash -v'
 alias mkdir='mkdir -p'
-alias ps='ps auxf'
 alias ping='ping -c 10'
 alias less='less -R'
-alias cls='clear'
-alias apt-get='sudo apt-get'
-alias multitail='multitail --no-repeat -c'
-alias freshclam='sudo freshclam'
 
 # Change directory aliases
 alias home='cd ~'
@@ -149,24 +169,13 @@ alias bd='cd "$OLDPWD"'
 # Remove a directory and all files
 alias rmd='/bin/rm  --recursive --force --verbose '
 
-# Alias's for multiple directory listing commands
-alias la='ls -Alh'                # show hidden files
-alias ls='ls -aFh --color=always' # add colors and file type extensions
-alias lx='ls -lXBh'               # sort by extension
-alias lk='ls -lSrh'               # sort by size
-alias lc='ls -ltcrh'              # sort by change time
-alias lu='ls -lturh'              # sort by access time
-alias lr='ls -lRh'                # recursive ls
-alias lt='ls -ltrh'               # sort by date
-alias lm='ls -alh |more'          # pipe through 'more'
-alias lw='ls -xAh'                # wide listing format
-alias ll='ls -Fls'                # long listing format
-alias labc='ls -lap'              # alphabetical sort
-alias lf="ls -l | egrep -v '^d'"  # files only
-alias ldir="ls -l | egrep '^d'"   # directories only
-alias lla='ls -Al'                # List and Hidden Files
-alias las='ls -A'                 # Hidden Files
-alias lls='ls -l'                 # List
+alias ls='ls --color=auto'
+alias ll='ls -alF --color=auto'
+alias la='ls -A --color=auto'
+alias l='ls -CF --color=auto'
+alias cl='clear && fastfetch'
+alias ed='micro'
+alias cat='batcat'
 
 # alias chmod commands
 alias mx='chmod a+x'
@@ -220,6 +229,20 @@ alias logs="sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' 
 
 # SHA1
 alias sha1='openssl sha1'
+
+alias clickpaste='sleep 3; xdotool type "$(xclip -o -selection clipboard)"'
+
+# KITTY - alias to be able to use kitty features when connecting to remote servers(e.g use tmux on remote server)
+
+alias kssh="kitty +kitten ssh"
+
+# alias to cleanup unused docker containers, images, networks, and volumes
+
+alias docker-clean=' \
+  docker container prune -f ; \
+  docker image prune -f ; \
+  docker network prune -f ; \
+  docker volume prune -f '
 
 #######################################################
 # SPECIAL FUNCTIONS
